@@ -1,0 +1,547 @@
+/* ==========================================================
+   Profile.module.css
+   Scoped styles for the Profile & Settings page.
+   ========================================================== */
+
+/* --- CSS VARIABLES (Hard-coded dark mode) --- */
+.profilePage {
+  --bg-primary: #0d1117;
+  --bg-card: #161b22;
+  --bg-tertiary: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border-color: rgba(139, 92, 246, 0.15);
+  --brand-primary: #6c63ff;
+  --brand-hover: #5b52e0;
+  --success-color: #10b981;
+  --danger-color: #ef4444;
+  --info-color: #3b82f6;
+
+  min-height: 100vh;
+  background: #0d1117;
+}
+.profileContainer {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 40px;
+  padding-top: 40px;
+  padding-bottom: 40px; /* ← add this */
+}
+
+/* --- 1. HEADER --- */
+.profileHeader {
+  position: relative;
+  background: #161b22;
+  border-radius: 24px;
+  border: 1px solid rgba(139,92,246,.35);
+  padding: 65px 30px;
+  margin-bottom: 40px;
+  margin-left: -60px;
+  margin-right: -60px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 4px 0 0 #6c63ff,
+              0 0 40px rgba(108,99,255,.2);
+}
+.profileHeader:hover {
+  transform: translateY(-4px);
+  border-color: rgba(139,92,246,.5);
+  box-shadow: inset 0 4px 0 0 #6c63ff,
+              0 0 40px rgba(108,99,255,.2);
+}
+
+.profileHeaderContent {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.profileHeader h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #f8fafc;
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+.profileHeader p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* --- 2. GRID SYSTEM --- */
+.profileGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 2rem;
+}
+@media (min-width: 1024px) {
+  .profileGrid {
+    grid-template-columns: 4fr 1fr;
+  }
+}
+.profileMainColumn {
+  display: flex;
+  min-height: auto;
+  flex-direction: column;
+  gap: 2rem;
+}
+.profileSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* --- 3. CARDS --- */
+.card {
+  position: relative;
+  background: #161b22;
+  border-radius: 24px;
+  border: 1px solid rgba(108,99,255,.25);
+  padding: 32px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 4px 0 0 #6c63ff,
+              0 0 30px rgba(108,99,255,.15);
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: inset 0 4px 0 0 #6c63ff,
+              0 0 30px rgba(108,99,255,.15);
+  border-color: rgba(108,99,255,.25);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(108,99,255,.15);
+}
+.cardHeader h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: #f8fafc;
+}
+.card--sidebar:hover {
+  transform: translateY(-4px);
+  box-shadow: inset 0 4px 0 0 #6c63ff,
+              0 0 30px rgba(108,99,255,.15);
+  border-color: rgba(108,99,255,.25);
+}
+.sidebarCardTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  color: #f8fafc;
+}
+
+/* --- 4. USER INFO SECTION --- */
+.userInfoHeader {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.avatarWrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+.hiddenFileInput {
+  display: none;
+}
+/* REPLACE in Profile.module.css */
+.avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(108,99,255,.2);   /* always glowing */
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.avatar:hover {
+  transform: scale(1.04);                      /* only scale on hover */
+box-shadow: 0 0 20px rgba(108,99,255,.2);
+}
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+.avatarText {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+/* UPDATE .avatarEditButton in Profile.module.css */
+.avatarEditButton {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;        /* pull it back inside the circle */
+  padding: 0.4rem;   /* slightly smaller */
+  background-color: #6c63ff;   /* always purple so it's obvious */
+  border: 2px solid #020b1f;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+.avatarEditButton:hover {
+  background-color: #5b52e0;
+  transform: scale(1.15);
+  box-shadow: 0 0 12px rgba(108,99,255,.6);
+}
+.profileName {
+  font-size: 2.7rem;
+  font-weight: 800;
+  color: #f8fafc;
+  margin-bottom: 12px;
+}
+.profileRole {
+  color: #8b5cf6;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.userEmail {
+  font-size: 1rem;
+  color: #94a3b8;
+}
+
+/* --- 5. INFO GRID & FIELDS --- */
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  padding-top: 0.5rem;
+}
+.infoField {
+  background: #1c2128;
+  border: 1px solid rgba(108,99,255,.08);
+  border-radius: 18px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+.infoField:hover {
+  border-color: rgba(108,99,255,.25);
+  background: #21262d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(108,99,255,.12);
+}
+.fieldLabel {
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 8px;
+}
+.fieldDisplay {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  color: #f8fafc;
+  word-break: break-word;    /* ADD this */
+  white-space: normal;       /* ADD this */
+  text-transform: none;      /* ADD this — prevents uppercase squishing */
+}
+.fieldIcon {
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+.fieldInput {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #1e293b;
+  border: 1px solid rgba(139,92,246,.2);
+  color: #f8fafc;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+.fieldInput:focus {
+  outline: none;
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 2px rgba(108,99,255,.25);
+  background-color: #1e2d45;
+}
+.fieldInput:hover:not(:focus) {
+  border-color: rgba(108,99,255,.25);
+}
+.fieldInput[type="select"],
+.fieldInput select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+.fieldInput[type="textarea"],
+.fieldInput textarea {
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Section divider */
+.sectionDivider {
+  margin: 2rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(108,99,255,.2);
+}
+.sectionDivider h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin: 0;
+}
+
+/* --- 6. STATS GRID --- */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  .statsGrid { grid-template-columns: repeat(4, 1fr); }
+}
+.statCard {
+  background-color: #111827;
+  border: 1px solid rgba(108,99,255,.15);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+.statCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(108,99,255,.15);
+  border-color: rgba(108,99,255,.35);
+}
+.statIconWrapper {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: transform 0.3s ease;
+}
+.statCard:hover .statIconWrapper {
+  transform: scale(1.1) rotate(5deg);
+}
+.statCard--blue .statIconWrapper { background-color: #3b82f6; }
+.statCard--green .statIconWrapper { background-color: #10b981; }
+.statCard--purple .statIconWrapper { background-color: #8b5cf6; }
+.statCard--red .statIconWrapper { background-color: #ef4444; }
+.statValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  color: #f8fafc;
+}
+.statLabel {
+  color: #94a3b8;
+  margin: 0.25rem 0 0;
+}
+
+/* --- 7. SIDEBAR & SETTINGS --- */
+.themeToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.themeToggleLabel {
+  font-weight: 500;
+  color: #f8fafc;
+}
+.switch {
+  width: 44px;
+  height: 24px;
+  background-color: #1e293b;
+  border-radius: 9999px;
+  padding: 4px;
+  display: flex;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.switch.active {
+  background-color: #6c63ff;
+  justify-content: flex-end;
+}
+.switchHandle {
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+}
+.quickActionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  background: #1c2128;
+  border: 1px solid rgba(108,99,255,.08);
+  color: #f8fafc;
+  transition: all 0.3s ease;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+}
+.quickActionBtn:hover {
+  border-color: rgba(108,99,255,.4);
+  background: #21262d;
+  transform: translateX(6px);
+  box-shadow: 0 4px 15px rgba(108,99,255,.15);
+}
+.quickActionBtn:last-child {
+  margin-bottom: 0;
+}
+.logoutBtn {
+  color: #ef4444;
+}
+.logoutBtn:hover {
+  background-color: rgba(239,68,68,.12);
+  border-color: rgba(239,68,68,.3);
+  transform: translateX(6px);
+  box-shadow: 0 4px 15px rgba(239,68,68,.15);
+}
+
+/* --- 8. BUTTONS & ACTIONS --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btnPrimary {
+  background-color: #6c63ff;
+  color: white;
+}
+.btnPrimary:hover {
+  background-color: #5b52e0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(108,99,255,.4);
+}
+.btnSuccess {
+  background-color: #10b981;
+  color: white;
+}
+.btnSuccess:hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(16,185,129,.4);
+}
+.btnSecondary {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border-color: rgba(108,99,255,.2);
+}
+.btnSecondary:hover {
+  background-color: #273449;
+  border-color: rgba(108,99,255,.4);
+  transform: translateY(-1px);
+}
+.formActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(108,99,255,.15);
+  justify-content: flex-end;
+}
+.card--sidebar:hover {
+  transform: translateY(-4px);
+  box-shadow: inset 0 4px 0 0 #6c63ff,
+              0 12px 25px rgba(108,99,255,.12);
+  border-color: rgba(108,99,255,.35);
+}
+.profileHero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  background: radial-gradient(circle at right, rgba(108,99,255,.15), transparent 50%),
+    rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.06);
+  transition: all 0.3s ease;
+}
+.profileHero:hover {
+  border-color: rgba(108,99,255,.3);
+box-shadow: 0 8px 20px rgba(108,99,255,.08);
+}
+.infoField span {
+  text-transform: none;
+  letter-spacing: normal;
+  color: #f8fafc;
+  font-size: 0.95rem;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px 10px 14px;
+  border-radius: 14px;
+  background: #161b22;
+  border: 1px solid #6c63ff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+.backBtn:hover {
+  background: #1c2128;
+  border-color: #6c63ff;
+  transform: translateX(-1px);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.08),
+              0 4px 12px rgba(108, 99, 255, 0.12);
+}
+.backBtnText {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  font-family: inherit;
+}
+
+
+/* ADD this to fix arrow color */
+.backBtn span:first-child {
+  color: #ffffff;
+  font-size: 16px;
+}
