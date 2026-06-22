@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { 
-  Pill, Calendar, User, Plus, Search,
-  Download, Share2, Trash2, Eye, X, ArrowLeft,Edit
+import {
+  Pill, Calendar, Plus, Search,
+  Download, Share2, Trash2, Eye, X, ArrowLeft, Edit
 } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';

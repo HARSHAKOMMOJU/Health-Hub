@@ -326,18 +326,8 @@ console.log('RESPONSE HEADERS:', response.headers);
     setViewingReport(report);
     toast.error('Could not open file, showing details instead');
   }
-};
+}
 
-  // Handle share report
-  const handleShareWhatsApp = (report) => {
-const text = `Lab Report: ${report.title} from ${report.labName} on ${
-  report.reportDate
-    ? new Date(report.reportDate).toLocaleDateString()
-    : 'No Date'
-}`;    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    window.open(whatsappUrl, '_blank');
-    toast.success('Sharing report...');
-  };
 
   // Handle delete report
 const handleDeleteReport = async () => {

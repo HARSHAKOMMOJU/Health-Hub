@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';import { motion } from 'framer-motion';
-import { 
+import {
   User, Mail, Phone, MapPin, Calendar, Edit, Save, X,
-  Camera, Shield, Bell, Settings, LogOut, Heart, Activity, FileText,
-  Droplets, Users, AlertTriangle, Pill, Stethoscope
+  Camera, Shield, Bell, LogOut,
+  Droplets, Users, AlertTriangle, Stethoscope
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -102,15 +102,6 @@ if (userId) {
       surgeries: user?.medicalHistory?.surgeries || []
     }
   });
-
-  const [stats] = useState({
-    totalAppointments: 0,
-    upcomingAppointments: 0,
-    totalPrescriptions: 0,
-    totalLabReports: 0,
-    totalHealthRecords: 0
-  });
-
   const handleSave = async () => {
     if (!editForm.firstName.trim()) { toast.error("Please enter First Name"); return; }
     if (!editForm.lastName.trim()) { toast.error("Please enter Last Name"); return; }
