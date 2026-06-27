@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 // Create axios instance with base configuration
-const API_BASE_URL = 'https://health-hub-y7fe.onrender.com';
-
+const API_BASE_URL = 'https://health-hub-y7fe.onrender.com/api';
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
