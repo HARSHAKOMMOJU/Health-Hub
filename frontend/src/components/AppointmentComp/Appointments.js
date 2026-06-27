@@ -3,8 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Calendar from 'react-calendar';
 import { 
-  Calendar as CalendarIcon, Clock, MapPin, User, Plus,
-  Edit, Trash2, X, ArrowLeft, Star, FileText, Building
+  Calendar as CalendarIcon, Clock, User, Plus,
+  Trash,Trash2, ArrowLeft, FileText, Building
 } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -16,8 +16,6 @@ import styles from './Appointments.module.css';
 const Appointments = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isDarkMode, toggleTheme } = useTheme();
-  const { user } = useAuth();
   const [cancelModal, setCancelModal] = useState({ open: false, appointmentId: null });
 const [selectedDate, setSelectedDate] = useState(
   location.state?.selectedDate
@@ -100,17 +98,6 @@ setAppointments(
     toast.error('Failed to cancel appointment');
   }
 };
-
-  // Edit appointment
-  const handleEditAppointment = (appointment) => {
-    // Navigate to hospital search to book a new appointment
-    navigate('/hospitals');
-  };
-
-  // Rate appointment
-  const handleRateAppointment = (appointment) => {
-    toast.info('Rating feature coming soon!');
-  };
   const getAppointmentsForDate = (
   selectedDate
 ) => {
@@ -159,37 +146,6 @@ setAppointments(
     return null;
   };
 
-  // Format appointment time
-  const formatTime = (time) => {
-    if (!time) return '';
-    return time;
-  };
-
-  // Get status color
-  const getStatusColor = (status) => {
-    const colors = {
-      'scheduled': '#3b82f6',
-      'confirmed': '#10b981',
-      'in-progress': '#f59e0b',
-      'completed': '#10b981',
-      'cancelled': '#ef4444',
-      'no-show': '#ef4444'
-    };
-    return colors[status] || '#6b7280';
-  };
-
-  // Get status text
-  const getStatusText = (status) => {
-    const statusMap = {
-      'scheduled': 'Scheduled',
-      'confirmed': 'Confirmed',
-      'in-progress': 'In Progress',
-      'completed': 'Completed',
-      'cancelled': 'Cancelled',
-      'no-show': 'No Show'
-    };
-    return statusMap[status] || status;
-  };
 const canCancelAppointment = (
   appointment
 ) => {

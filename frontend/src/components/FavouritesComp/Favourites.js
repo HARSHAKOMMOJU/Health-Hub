@@ -5,7 +5,6 @@ import {
   ArrowLeft,
   Building2,
   Star,
-  IndianRupee,
   Search,
   User
 } from "lucide-react";

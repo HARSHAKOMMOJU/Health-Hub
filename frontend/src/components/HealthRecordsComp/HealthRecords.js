@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import { 
   Heart, Activity, Thermometer, Weight, Plus, Search, 
-  Download, Share2, Edit, Trash2, TrendingUp, TrendingDown,
-  X, Calendar, FileText, ArrowLeft, Eye, ChevronLeft, ChevronRight
+  Download, Edit, Trash2, TrendingUp, TrendingDown,
+  X, Calendar, ArrowLeft, Eye, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { healthRecordAPI } from '../../services/api';
 import toast from 'react-hot-toast';
@@ -144,7 +144,6 @@ const CustomDatePicker = ({ value, onChange, name }) => {
 const HealthRecords = () => {
   const [viewingRecord, setViewingRecord] = useState(null);
   const [deleteModal, setDeleteModal] = useState({ open: false, recordId: null });
-  const { user } = useAuth();
   const navigate = useNavigate();
   const [healthRecords, setHealthRecords] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -255,22 +254,6 @@ const handleDelete = async () => {
     }
   };
 
-  // Handle share record
-  const handleShare = async (record) => {
-    try {
-      const response = await healthRecordAPI.shareHealthRecord(record._id, {
-        email: '',
-        permissions: 'view'
-      });
-      toast.success('Health record shared successfully');
-      // You could open the share URL in a new window
-      // window.open(response.data.shareUrl, '_blank');
-    } catch (error) {
-      console.error('Error sharing health record:', error);
-      toast.error('Failed to share health record');
-    }
-  };
-
   // Handle export records
 const handleExport = (record) => {
   const doc = new jsPDF();
@@ -336,19 +319,6 @@ const handleExport = (record) => {
 
   toast.success(`${record.recordType} downloaded as PDF ✓`);
 };
-
-  // Reset form
-  const resetForm = () => {
-    setFormData({
-      recordType: '',
-      value: '',
-      unit: '',
-      date: '',
-      status: 'normal',
-      notes: ''
-    });
-    setEditingRecord(null);
-  };
 
   if (loading) {
     return (

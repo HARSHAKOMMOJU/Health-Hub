@@ -1,18 +1,16 @@
 import axios from 'axios';
 import HospitalMap from "./HospitalMap";
-import Doctors from "./Doctors";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
-  Search, MapPin, Star, CheckCircle, X, SlidersHorizontal, Navigation, 
-  Phone, ExternalLink, Heart, Calendar, User, Clock, ArrowLeft, 
-  Users, Award, Building
+  Search, MapPin, Star, CheckCircle, SlidersHorizontal, Navigation, 
+  Phone, ExternalLink, Heart, Calendar, User, ArrowLeft, 
+  Users
 } from 'lucide-react';
 import ReactCalendar from 'react-calendar';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
-import { hospitalAPI, doctorAPI, appointmentAPI } from '../../services/api';
+import { doctorAPI, appointmentAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 import { useLocation } from 'react-router-dom';
 import styles from './HospitalSearch.module.css';
@@ -888,12 +886,10 @@ doctors: [
   81.5212
 ]);
   const [userLocation, setUserLocation] = useState(null);
-  const [locationPermission, setLocationPermission] = useState('prompt');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('All Specialties');
   const [selectedDistrict, setSelectedDistrict] = useState('All Districts');
   const [showFilters, setShowFilters] = useState(false);
-  const [likedHospitals, setLikedHospitals] = useState([]);
   
   // Doctor and appointment booking states
   const [selectedHospital, setSelectedHospital] = useState(null);
@@ -908,7 +904,6 @@ doctors: [
   const [currentView, setCurrentView] = useState('hospitals');
   const [bookingFromAppointments, setBookingFromAppointments] =
   useState(false);
-  const [lastSearch, setLastSearch] = useState(''); // hospitals, doctors, booking
   const handleGetLocation = () => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -934,54 +929,6 @@ doctors: [
           setLoading(false);
         }
       }
-    );
-  };
-
-  // Get user location
-  const getUserLocation = () => {
-    if (!navigator.geolocation) {
-      toast.error('Geolocation is not supported by your browser');
-      return;
-    }
-
-    setLoading(true);
-    const options = {
-      enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: 300000
-    };
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setUserLocation({ lat: latitude, lng: longitude });
-        setLocationPermission('granted');
-        toast.success('Location accessed successfully!');
-        fetchHospitals(latitude, longitude);
-        setLoading(false);
-      },
-      (error) => {
-        console.error('Error getting location:', error);
-        setLocationPermission('denied');
-        let errorMessage = 'Unable to access location. Showing all hospitals.';
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
-            errorMessage = 'Location permission denied. Please enable location access.';
-            break;
-          case error.POSITION_UNAVAILABLE:
-            errorMessage = 'Location information unavailable.';
-            break;
-          case error.TIMEOUT:
-            errorMessage = 'Location request timed out.';
-            break;
-          default:
-            errorMessage = 'An unknown error occurred while getting location.';
-        }
-        toast.error(errorMessage);
-        fetchHospitals();
-        setLoading(false);
-      },
-      options
     );
   };
 
@@ -1035,28 +982,6 @@ doctors: [
       toast.error("Failed to fetch hospitals");
     } finally {
       setLoading(false);
-    }
-  };
-
-  // Fetch doctors for a hospital
-  const fetchDoctors = async (hospitalId) => {
-    try {
-      const response = await doctorAPI.getDoctorsByHospital(hospitalId);
-      setDoctors(response.data || []);
-    } catch (error) {
-      console.error('Error fetching doctors:', error);
-      toast.error('Failed to fetch doctors');
-    }
-  };
-
-  // Fetch available slots for a doctor
-  const fetchAvailableSlots = async (doctorId, date) => {
-    try {
-      const response = await doctorAPI.getAvailableSlots(doctorId, { date });
-      setAvailableSlots(response.data.availableSlots || []);
-    } catch (error) {
-      console.error('Error fetching slots:', error);
-      toast.error('Failed to fetch available slots');
     }
   };
 
@@ -1221,16 +1146,6 @@ department: mapSpecialtyToDepartment(selectedDoctor.specialization || selectedDo
     return matchesSearch && matchesSpecialty && matchesDistrict;
   });
 
-  // Toggle liked hospital
-  const toggleLiked = (hospitalId) => {
-    setLikedHospitals(prev =>
-      prev.includes(hospitalId)
-        ? prev.filter(id => id !== hospitalId)
-        : [...prev, hospitalId]
-    );
-    toast.success('Your preferences have been updated!');
-  };
-
   // Open Google Maps
   const openGoogleMaps = (coordinates) => {
     window.open(`https://www.google.com/maps?q=${coordinates.lat},${coordinates.lng}`, '_blank');
@@ -1242,10 +1157,13 @@ department: mapSpecialtyToDepartment(selectedDoctor.specialization || selectedDo
 
   useEffect(() => {
     fetchHospitals();
-  }, []);
+  },
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+ []);
 
   useEffect(() => {
     fetchHospitals();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, selectedSpecialty, selectedDistrict]);
 
   // Render hospitals view

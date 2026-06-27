@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  FileText, Upload, Download, Share2, Eye, Trash2,
-  Plus, ArrowLeft, Calendar, User, AlertCircle,
+  FileText, Upload, Download, Eye, Trash2,
+  Plus, ArrowLeft, AlertCircle,
   CheckCircle, X, Clock, Search, Edit   // ADD Edit here
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
@@ -32,7 +32,6 @@ const [editingReport, setEditingReport] = useState(null);
 const [deleteModal, setDeleteModal] = useState({ open: false, reportId: null });
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
-  const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -165,7 +164,9 @@ fetchLabReports();
       console.error('Error uploading lab report:', error);
       toast.error('Failed to upload lab report');
     }
-  }, [uploadForm]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [uploadForm]);
+
 
   // Handle download
 const handleDownload = async (report) => {

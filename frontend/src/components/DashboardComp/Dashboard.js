@@ -6,8 +6,6 @@ import {
   Menu, X, Clock, CheckCircle, AlertCircle, TrendingUp, Activity
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useTheme } from '../../contexts/ThemeContext';
-import toast from 'react-hot-toast';
 import {
   appointmentAPI,
   prescriptionAPI,
@@ -347,7 +345,7 @@ const appointments =
       <div className={styles.mainArea}>
         <header className={styles.dashboardHeader}>
           <button className={styles.mobileMenuToggle} onClick={() => setIsMobileMenuOpen(true)}><Menu /></button>
-          <div className={styles.headerActions}>
+          <div className={styles.headerActions}>+
            <button
   className={`${styles.notificationBtn} ${styles.favoriteBtn}`}
   onClick={() => navigate("/favourites")}
